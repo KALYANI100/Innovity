@@ -1,20 +1,21 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-const authMiddleware = async (req,res,next) => {
+dotenv.config();
 
-    const {token} = req.headers;
-    if(!token){
-        return res.json({success:false,message:"Not Authorized Login Again"});
+const authMiddleware = async (req, res, next) => {
+    const token = req.header("Authorization")?.split(" ")[1]; // Bearer Token
+    if (!token) {
+        return res.status(401).json({ success: false, message: "Unauthorized: No token provided" });
     }
-    try{
-        const token_decode = jwt.verify(token,process.env.JWT_SECRET);
-        req.body.userId = token_decode.id;
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; // Attach user data to request
         next();
+    } catch (error) {
+        res.status(401).json({ success: false, message: "Invalid token" });
     }
-    catch (error) {
-        console.log(error);
-        res.json({success:false,message:"Error"});
-    }
-}
+};
 
 export default authMiddleware;

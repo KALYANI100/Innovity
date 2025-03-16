@@ -34,7 +34,7 @@ const createToken = (id) => {
 }
 
 const registerTeacher = async (req,res)=>{
-    const {name,password,email,age} = req.body;
+    const {username,name,password,email,age} = req.body;
 
     try {
         const TeacherExists = await teacherModel.findOne({email});
@@ -55,19 +55,21 @@ const registerTeacher = async (req,res)=>{
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt);
-
+        const profilePicture = `https://ui-avatars.com/api/?name=${name}&size=200`;
 
         const newTeacher = new teacherModel({
+            username:username,
             name:name,
             email:email,
             password:hashedPassword,
-            age:age
+            age:age,
+            profile_pic:profilePicture
         })
 
         //now we need to save this user details in our database
         const teacher = await newTeacher.save();
         const token = createToken(teacher._id);
-        res.json({success:true,token});
+        res.json({success:true,token,teacher});
     }
     catch(error){
         console.log(error);

@@ -60,7 +60,7 @@ const registerStudent = async (req, res) => {
         // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+        const profilePicture=`https://api.dicebear.com/8.x/bottts/svg?seed=${username}`
         // Create new student
         const newStudent = new studentModel({
             username,
@@ -72,7 +72,7 @@ const registerStudent = async (req, res) => {
             city,
             state,
             stdclass,
-            profile_pic: "", // Default empty profile picture
+            profile_pic: profilePicture, 
             badges: [], // Empty badges array
             curr_streak: 0,
             longest_streak: 0,
