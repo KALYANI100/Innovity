@@ -86,7 +86,7 @@ const registerStudent = async (req, res) => {
 
     } catch (error) {
         console.error("Registration error:", error);
-        res.status(500).json({ success: false, message: "Server Error" });
+        res.status(500).json({ success: false, message: "Server Error In Student Controller" });
     }
 };
 

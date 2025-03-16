@@ -45,16 +45,14 @@ const createPost = async (req, res) => {
             return res.json({ success: false, message: "Student not found" });
         }
 
-        let fileUrl = "htttps://nothing.com";
+        let fileUrl = null;
         if (file) {
             fileUrl = await uploadToS3(file.buffer, file.originalname, file.mimetype);
         }
-
+        let new_points=10;
+        let newStreak = 1;
         const today = new Date();
         const lastPost = student.lastPost ? new Date(student.lastPost) : null;
-
-        let newStreak = 1;
-        let new_points=10;
         if (lastPost) {
             const oneWeekAgo = new Date();
             oneWeekAgo.setDate(today.getDate() - 7);

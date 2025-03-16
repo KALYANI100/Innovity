@@ -6,7 +6,7 @@ dotenv.config();
 const authMiddleware = async (req, res, next) => {
     const token = req.header("Authorization")?.split(" ")[1]; // Bearer Token
     if (!token) {
-        return res.status(401).json({ success: false, message: "Unauthorized: No token provided" });
+        return res.status(401).json({ success: false, message: "Unauthorized: No token provided by user" });
     }
 
     try {

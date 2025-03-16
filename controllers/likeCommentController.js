@@ -88,7 +88,7 @@ const commentOnPost = async (req, res) => {
         });
 
         await post.save();
-        res.json({ success: true, message: "Comment added successfully" });
+        res.json({ success: true, message: "Comment of User added successfully" });
 
     } catch (error) {
         console.error("🚨 Error commenting on post:", error);
