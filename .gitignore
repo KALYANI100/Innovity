@@ -1,0 +1,10 @@
+# Ignore node_modules (for Node.js projects)
+node_modules/
+
+# Ignore env (for Python virtual environments or other environment files)
+env/
+
+# Ignore other unnecessary files
+.DS_Store
+Thumbs.db
+*.log
