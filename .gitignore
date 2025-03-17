@@ -3,6 +3,7 @@ node_modules/
 
 # Ignore env (for Python virtual environments or other environment files)
 env/
+.env
 
 # Ignore other unnecessary files
 .DS_Store
