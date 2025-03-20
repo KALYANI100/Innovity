@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import Quiz from "./models/quiz.models";
+import Leaderboard from "./models/leaderboard.models";
 
 dotenv.config();
 const app = express();
@@ -13,26 +15,6 @@ mongoose.connect(process.env.MONGO_URI)
 .then(()=>console.log("Connected"))
 .catch((err)=>console.error("Failed",err));
 
-const quizSchema = new mongoose.Schema({
-  topic:String,
-  difficulty:String,
-  questions:[
-    {
-      questionText:String,
-      options:[String],
-      correctAnswer:String
-    }
-  ]
-});
-
-const Quiz = mongoose.model("Quiz",quizSchema);
-
-const leaderboardSchema = new mongoose.Schema({
-  username:String,
-  score:Number,
-  timestamp: {type: Date,default:Date.now}
-});
-const Leaderboard = mongoose.model("Leaderboard",leaderboardSchema);
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
