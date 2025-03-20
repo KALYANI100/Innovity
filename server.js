@@ -5,15 +5,14 @@ import mongoose from "mongoose";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Quiz from "./models/quiz.models";
 import Leaderboard from "./models/leaderboard.models";
+import connectDB from "./config/db";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>console.log("Connected"))
-.catch((err)=>console.error("Failed",err));
+connectDB();
 
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
