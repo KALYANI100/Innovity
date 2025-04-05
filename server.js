@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.send("🚀 Chatbot Backend is Running!");
 });
 
-// ✅ Chatbot API Route
+
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
