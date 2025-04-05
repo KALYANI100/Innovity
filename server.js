@@ -3,9 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import Quiz from "./models/quiz.models";
-import Leaderboard from "./models/leaderboard.models";
-import connectDB from "./config/db";
+import Quiz from "./models/quiz.models.js";
+import Leaderboard from "./models/leaderboard.models.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
 const app = express();
@@ -18,6 +18,31 @@ connectDB();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
+app.get("/", (req, res) => {
+  res.send("🚀 Chatbot Backend is Running!");
+});
+
+// ✅ Chatbot API Route
+app.post("/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message) {
+      return res.status(400).json({ error: "Message is required" });
+    }
+
+    const result = await model.generateContent(message);
+
+    // ✅ Ensure the response structure is valid
+    const reply =
+      result.response?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "I couldn't generate a response.";
+
+    res.json({ reply });
+  } catch (error) {
+    console.error("❌ Chatbot Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 app.post("/generate-quiz", async (req, res) => {
   try {
