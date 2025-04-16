@@ -1,0 +1,31 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+debug.log
+error.log
+
+# Build files
+dist/
+build/
+
+# IDE / Editor settings
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Git merge conflict files
+*.orig
